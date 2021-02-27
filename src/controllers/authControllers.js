@@ -8,7 +8,6 @@ module.exports = {
     const { body } = req;
     const saltRounds = 10;
 
-    console.log("Salt Round ", saltRounds);
     bcrypt.hash(body.password, saltRounds, (err, hashPassword) => {
       const newBody = {
         ...body,
@@ -54,7 +53,6 @@ module.exports = {
           });
         } else {
           const isValid = bcrypt.compareSync(body.password, data.password);
-          console.log(isValid);
           if (!isValid) {
             res.send({
               msg: "Error Login",

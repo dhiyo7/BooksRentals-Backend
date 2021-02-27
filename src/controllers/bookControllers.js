@@ -1,24 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const form = require("../helpers/form");
 
 module.exports = {
   getBooks: (req, res) => {
-    console.log(req);
     prisma.books
       .findMany()
       .then((data) => {
-        res.send({
-          msg: "Success",
-          status: 200,
-          data: data,
-        });
+        form.success(res, 200, data);
       })
       .catch((error) => {
-        res.send({
-          msg: "Error",
-          status: 500,
-          error: error 
-        });
+        form.error(res, 500, error);
       });
   },
 };
