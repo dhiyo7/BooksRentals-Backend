@@ -1,0 +1,19 @@
+{
+  "name": "BooksCollection",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Felix Yunianto Gunawan",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "2.17.0",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "prisma": "2.17.0"
+  }
+}
