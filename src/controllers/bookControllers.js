@@ -14,6 +14,7 @@ module.exports = {
       });
   },
   postBooks: (req, res) => {
+    console.log("DATA BUKU ", req.body);
     prisma.books
       .create({data: req.body})
       .then((data) => {
