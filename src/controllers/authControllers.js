@@ -14,12 +14,14 @@ module.exports = {
         ...body,
         password: hashPassword,
       };
-
+      
+      
       prisma.users
-        .create({
-          data: newBody,
-        })
-        .then((data) => {
+      .create({
+        data: newBody,
+      })
+      .then((data) => {
+          delete data.password
           res.send({
             msg: "Success Sign Up",
             status: 200,
@@ -62,13 +64,13 @@ module.exports = {
           } else {
             //membuat payload
             const payload = {
-                id: data.id,
+              id: data.id,
               name: data.name,
               username: data.username,
               email: data.email,
             };
 
-            const token = jwt.sign(payload, "PowerRanger", {
+            const token = jwt.sign(payload, process.env.SECRET_KEY, {
               expiresIn: 86400, //seconds
             });
 
