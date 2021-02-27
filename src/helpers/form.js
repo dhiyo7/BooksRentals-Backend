@@ -6,7 +6,7 @@ module.exports = {
       data,
     });
   },
-  error: (err, status, data) => {
+  error: (res, status, err) => {
     res.status(status).send({
       message: "Error Network",
       status,
