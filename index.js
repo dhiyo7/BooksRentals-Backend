@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
+const port = process.env.PORT || 7007
 
 const mainRoutes = require("./src/routes");
 
@@ -14,6 +15,6 @@ app.use(express.urlencoded({extended : false}))
 
 app.use('/', mainRoutes);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
