@@ -13,4 +13,14 @@ module.exports = {
         form.error(res, 500, error);
       });
   },
+  postBooks: (req, res) => {
+    prisma.books
+      .create({data: req.body})
+      .then((data) => {
+        form.success(res, 200, data);
+      })
+      .catch((error) => {
+        form.error(res, 500, error);
+      });
+  },
 };
