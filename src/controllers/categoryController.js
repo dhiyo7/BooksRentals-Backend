@@ -10,7 +10,7 @@ module.exports = {
         include: { books: true },
       })
       .then((data) => {
-        form.success(res, 200, data);
+        form.success(res, "Success Get All Categories", 200, data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,7 +31,7 @@ module.exports = {
         data: newBody,
       })
       .then((data) => {
-        form.success(res, 200, data);
+        form.success(res,"Success Create New Category", 200, data);
       })
       .catch((err) => {
         form.error(res, 500, err);
@@ -58,11 +58,13 @@ module.exports = {
               req.file !== undefined ? req.file.path : data.category_image,
           };
 
-          if (fs.existsSync(data.category_image)) {
-            fs.unlink(data.category_image, (err) => {
-              if (err) throw err;
-              console.log("Photo kehapus");
-            });
+          if(req.file !== undefined){
+            if(fs.existsSync(data.category_image)) {
+              fs.unlink(data.category_image, (err) => {
+                if (err) throw err;
+                console.log("Image is deleted");
+              });
+            }
           }
 
           prisma.categories
@@ -73,7 +75,7 @@ module.exports = {
               },
             })
             .then((data) => {
-              form.success(res, 200, data);
+              form.success(res, "Success Update Category",200, data);
             })
             .catch((err) => {
               form.error(res, 500, err);
@@ -85,4 +87,41 @@ module.exports = {
         form.error(res, 500, err);
       });
   },
+
+  deleteCategory : (req, res) => {
+    const {id } = req.params
+
+    prisma.categories.findUnique({
+      where: {
+        id : parseInt(id)
+      }
+    })
+    .then((data) => {
+      if (!data) {
+        form.error(res, 404, "Data not available");
+      }else{
+        if(fs.existsSync(data.category_image)){
+          fs.unlink(data.category_image, (err) => {
+            if(err) throw err
+            console.log("Image is deleted");
+          })
+        }
+
+        prisma.categories.delete({
+          where : { 
+            id: parseInt(id)
+          }
+        })
+        .then((data) => {
+          form.success(res, "Success Delete Category",200, data)
+        })
+        .catch((err) => {
+          form.error(res, 500, err)
+        })
+      }
+    })
+    .catch((err) => {
+      form.error(res, 500, err)
+    })
+  }
 };

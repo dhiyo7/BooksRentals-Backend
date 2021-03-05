@@ -1,7 +1,7 @@
 module.exports = {
-  success: (res, status, data) => {
+  success: (res, message, status, data) => {
     res.status(status).send({
-      message: "Success",
+      message,
       status,
       data,
     });
