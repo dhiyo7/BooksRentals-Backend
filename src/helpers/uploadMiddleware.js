@@ -8,8 +8,9 @@ const multerStorage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const nameFormat = `PLUGIN-${Date.now()}-${file.fieldname}${path.extname(
-      file.original
+      file.originalname
     )}`;
+    console.log("Name Format ", nameFormat);
     cb(null, nameFormat);
   },
 });
@@ -23,7 +24,7 @@ const singleUpload = (req, res, next) => {
   const uploadSingle = upload.single("image");
   uploadSingle(req, res, (err) => {
     if (err) {
-      form.error(res, {
+      form.error(res, 500, {
         msg: "Multer Error",
         error: err,
       });

@@ -3,16 +3,27 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
+model categories {
+  id             Int     @id @default(autoincrement())
+  category_name  String  @db.VarChar(100)
+  category_image String  @db.Text
+  books          books[]
+}
+
 model books {
-  id          Int     @id @default(autoincrement())
-  title       String  @db.VarChar(100)
-  author      String  @db.VarChar(100)
-  publisher   String  @db.VarChar(100)
-  description String? @db.Text
+  id          Int         @id @default(autoincrement())
+  title       String      @db.VarChar(100)
+  author      String      @db.VarChar(100)
+  publisher   String      @db.VarChar(100)
+  isbn        Int?
+  pages       Int?
+  description String?     @db.Text
+  category_id Int?
+  category    categories? @relation(fields: [category_id], references: [id])
 }
 
 model users {
